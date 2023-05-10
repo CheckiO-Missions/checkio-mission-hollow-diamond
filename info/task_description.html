@@ -1,0 +1,55 @@
+<!-- Describe task in general -->
+
+<p>
+    Your function should return a multiline string of unique lowercase letters in alphabetical order. The characters should be placed in a form of hollow rhombus (diamond), along its edges, starting from the top vertex.  
+</p>
+<p>
+    For this purpose you are given three values (for their constraints see Preconditions):
+    <ul>
+        <li><b>side</b> - number of letters in each side of the rhombus;</li>
+        <li><b>length</b> - total number of letters you should use;</li>
+        <li><b>cw</b> - clockwise flag, which shows in what direction the letters must go (if <b>{% if is_js %}t{% else %}T{% endif %}rue</b> - letters should be placed in clockwise direction).</li>
+    </ul>
+</p>
+<p>
+    If it's not enough <b>length</b> to complete the form, complement it with <b>"*"</b>. The rhombus should not have white spaces at the right. Here is an example with arguments and expected result:
+</p>
+
+<p style="text-align: center;">
+    <img  title="example" src="{{MEDIA}}diamond.png" alt="example" style="max-height: 200px"/>
+</p>
+
+<!-- Explain input and output values -->
+<p>
+    <strong>Input:</strong> Three arguments: side ({% if is_js %}Number{% else %}int{% endif %}), length ({% if is_js %}Number{% else %}int{% endif %}) and clockwise flag ({% if is_js %}boolean{% else %}bool{% endif %}).
+</p>
+
+<p>
+    <strong>Output:</strong> Multiline string. 
+</p>
+
+
+<p>
+    <strong>Examples:</strong>
+</p>
+
+<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+
+<!-- Here you can explain how it can be used in development -->
+<!-- The section is optional -->
+<!-- <p class="for_info_only">
+
+    <strong>How it’s used:</strong>
+    <i>(math is used everywhere)</i>
+</p> -->
+
+<!-- Here you can explain some constraints for input-->
+<!-- The section is optional -->
+<p>
+    <strong>Preconditions:</strong>
+    <ul>
+    <li><i>26 >= length >= 0;</i></li>
+    <li><i>side > 1;</i></li>
+    <li><i>(side-1)*4 >= length.</i></li>
+    </ul>
+</p>
