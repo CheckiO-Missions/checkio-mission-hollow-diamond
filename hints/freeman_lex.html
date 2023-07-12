@@ -1,0 +1,175 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        I have no idea how to start solving this mission.
+    </div>
+    <div class="answer">
+        <p>
+            Catch an idea 💡! To create a field of white spaces of proper height and width, then iterate over the text and change the white space in the specific row-column of the field with current character of the text. Start from the top of diamond and change row and column values to "move" into given direction. At the end join characters in each row together, remove trailing white spaces and join all rows together into a multiline text.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Looks like a lot of steps, but I'm not afraid! What should I start from?
+    </div>
+    <div class="answer">
+        <p>
+            Great! First, you need to make some preparations and declare a few values. Let's start with the constant of English letters. Use capital letters for declaring a constant.    
+        </p>
+        <pre class="brush: python">
+LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+        </pre>
+        <p>
+            Now you need to build your <b class="code">text</b>, which consists of <b class="code">length</b> part of <b class="code">LOWERCASE</b>, converted to <a target="_blank" href="https://www.w3schools.com/python/ref_func_list.asp">list()</a>,  complemented with a list of multiple <b class="code">*</b> if necessary. Looking at any diamond you may see that a total number of elements in it is <b class="code">4*(side-1)</b>. That's all you need to build the <b class="code">text</b> - a full sequence of characters, which you need to place on the field. 
+        </p>
+        <pre class="brush: python">
+text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        What should I do next?
+    </div>
+    <div class="answer">
+        <p>
+            You may also notice, that a diamond has width equal <b class="code">2*side - 1</b> in its widest row. This is actually a size of your field.
+        </p>
+        <pre class="brush: python">
+tot_size = 2*side - 1
+        </pre>
+        <p>
+            Now let's build a field itself as <b class="code">tot_size</b> rows of <b class="code">tot_size</b> white spaces using <a target="_blank" href="https://www.w3schools.com/python/python_lists_comprehension.asp">list comprehension</a>.
+        </p>
+        <pre class="brush: python">
+field = [[" "] * tot_size for _ in range(tot_size)]
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        How to find starting position and shifts to the the next position?
+    </div>
+    <div class="answer">
+        <p>
+            The last in preparations you need to declare your starting row-column position and starting row and column shift to the next position. Let's think, what should they all be. The top og the diamond is in the first row and at the <b class="code">size</b> distance from the start of the row. Taking into consideration 0-based indexing in Python, you get expression build with tuple unpacking.
+        </p>
+        <pre class="brush: python">
+row, col = 0, side - 1
+        </pre>
+        <p>
+            Starting from top the next few characters will be lower - on the next rows, so row shift <b class="code">dr</b> is <b class="code">1</b>. Column shift <b class="code">dc</b> depends of the direction of placing characters <b class="code">cw</b>. If moving clockwise, the column shift is <b class="code">1</b>, otherwise <b class="code">-1</b>. Having in mind, that logic values may be interpreted as integers, I offer you a following expression to calculate it. Now all together.
+        </p>
+        <pre class="brush: python">
+row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+        </pre>
+        <p>
+            We are finally ready to fill out field in.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Yes, I am ready. Show me what to do!
+    </div>
+    <div class="answer">
+        <p>
+            Iterate over the <b class="code">text</b> using <a target="_blank" href="https://www.w3schools.com/python/python_for_loops.asp">for</a> loop and change a value (white space) in the current row-column position of <b class="code">field</b> with current <b class="code">char</b> using indexing.
+        </p>
+        <pre class="brush: python">
+for char in text:
+    field[row][col] = char
+        </pre>
+        <p>
+            Then (inside loop) update row-column position with current shifts - "move" to the next position.
+        </p>
+        <pre class="brush: python">
+row += dr
+col += dc
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wow. Looks like easy filling! But how to change the direction of moving when meet the end of the field?
+    </div>
+    <div class="answer">
+        <p>
+            Yes! Let's think about these cases. Use <a target="_blank" href="https://www.w3schools.com/python/gloss_python_elif.asp">if/elif</a> expression to handle them. Your "cursor" meets the last row only once - at the bottom of the diamond (where row equals the total size of the diamond with 0-base indexing in mind) and row shift changes its value to the opposite - after that it "moves" up!
+        </p>
+        <pre class="brush: python">
+if row == tot_size - 1:
+    dr *= -1
+        </pre>
+        <p>
+            "Cursor" meets end of the columns twice - at the left and right sides of the diamond (the exact order depends of the direction of moving). With the same logic as above extend the expression.
+        </p>
+        <pre class="brush: python">
+elif col in (0, tot_size - 1):
+    dc *= -1
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ok, what should I do after filling the field with characters from the text?
+    </div>
+    <div class="answer">
+        <p>
+            It's almost all. Join characters in each row of <b class="code">field</b> and strip trailing white spaces, using list comprehension, <a target="_blank" href="https://www.w3schools.com/python/ref_string_join.asp">str.join()</a> method and <a target="_blank" href="https://www.w3schools.com/python/ref_string_rstrip.asp">str.rstrip()</a> method. 
+        </p>
+        <pre class="brush: python">
+["".join(row).rstrip() for row in field]
+        </pre>
+        <p>
+            Now use this list as argument of join method with next line separator to create a multiline text which you need to return.
+        </p>
+        <pre class="brush: python">
+str_res = "\n".join("".join(row).rstrip() for row in field)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        So, how my final solution should look like?
+    </div>
+    <div class="answer">
+        <p>
+            You just need to join all previous hints and wrap your code into function expression. Using type hints for input and output data are highly recommended.
+        </p>
+        <p>Here is the whole solution:</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def hollow_diamond(side: int, length: int, cw: bool) -> str:
+
+    LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+    text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+    tot_size = 2*side - 1
+    field = [[" "] * tot_size for _ in range(tot_size)]
+    row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+    for char in text:
+        field[row][col] = char
+        row += dr
+        col += dc
+        if row == tot_size - 1:
+            dr *= -1
+        elif col in (0, tot_size - 1):
+            dc *= -1
+    str_res = "\n".join("".join(row).rstrip() for row in field)
+
+    return str_res
+        </pre>
+        </div>
+        <p>Click <b>Best Solutions</b> at mission menu and see a lot of other interesting solutions!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Thanks! I know and understand more now! Everything works fine!
+    </div>
+    <div class="answer">
+        Glad to hear it 👍!
+    </div>
+</div>
+</body>
