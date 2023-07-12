@@ -21,11 +21,11 @@
 
 <!-- Explain input and output values -->
 <p>
-    <strong>Вхідні дані:</strong> Три аргументи: сторона ({% if is_js %}Number{% else %}int{% endif %}), кількість ({% if is_js %}Number{% else %}int{% endif %}) і прапорець руху за год. стрілкою ({% if is_js %}boolean{% else %}bool{% endif %}).
+    <strong>Вхідні дані:</strong> Три аргументи: сторона як ціле число ({% if is_js %}number{% else %}int{% endif %}), кількість як ціле число ({% if is_js %}number{% else %}int{% endif %}) і прапорець руху за год. стрілкою як логічне значення (bool{% if is_js %}ean{% endif %}).
 </p>
 
 <p>
-    <strong>Вихід:</strong> Багатолінійний рядок. 
+    <strong>Вихід:</strong> Багатолінійний рядок <span translate="no">(str{% if is_js %}ing{% endif %})</span>. 
 </p>
 
 
