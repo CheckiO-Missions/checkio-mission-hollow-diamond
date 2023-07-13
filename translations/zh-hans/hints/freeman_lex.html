@@ -1,0 +1,175 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        我不知道如何开始解决这项任务。
+    </div>
+    <div class="answer">
+        <p>
+            给你个建议💡！创建一个具有适当高度和宽度的空白区域，然后遍历文本并根据文本的当前字符更改该区域特定行列中的空白。从菱形的顶部开始，改变行和列的值，向给定的方向 "移动"。最后，将每一行的字符连接在一起，删除尾部的空白，并将所有行连接在一起，形成多行文本。
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        看起来步骤很多，但我不怕！我应该从哪里开始呢？
+    </div>
+    <div class="answer">
+        <p>
+            很好！首先，您需要做一些准备工作并声明一些值。让我们从英文字母常量开始。使用大写字母声明常量。    
+        </p>
+        <pre class="brush: python">
+LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+        </pre>
+        <p>
+            现在，您需要建立您的<b class="code">text</b> ，它由<b class="code">length</b> <b class="code">LOWERCASE</b> 的一部分组成，转换为<a target="_blank" href="https://www.w3schools.com/python/ref_func_list.asp">list()</a> ，如果需要的话，用多个<b class="code">*</b> 的列表来补充。查看任何一个菱形，您可以看到其中元素的总数是<b class="code">4*(side-1)</b> 。这就是您构建<b class="code">text</b> 所需的全部内容 - 一个完整的字符序列，您需要将其放置在字段中。 
+        </p>
+        <pre class="brush: python">
+text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        下一步我应该做什么？
+    </div>
+    <div class="answer">
+        <p>
+            您可能还会注意到，菱形最宽的一行的宽度等于<b class="code">2*side - 1</b> 。这实际上是您的字段的大小。
+        </p>
+        <pre class="brush: python">
+tot_size = 2*side - 1
+        </pre>
+        <p>
+            现在，让我们用<a target="_blank" href="https://www.w3schools.com/python/python_lists_comprehension.asp">list comprehension</a> 建立一个<b class="code">tot_size</b> 行的<b class="code">tot_size</b> 空白字段。
+        </p>
+        <pre class="brush: python">
+field = [[" "] * tot_size for _ in range(tot_size)]
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        如何找到起始位置并移动到下一个位置？
+    </div>
+    <div class="answer">
+        <p>
+            在准备工作的最后，您需要声明您的起始行列位置和起始行列到下一个位置的移位。让我们想一想，它们都应该是什么。菱形的顶端位于第一行，距离行的起点为<b class="code">size</b> 。考虑到 Python 中基于 0 的索引，我们可以用元组解包来构建表达式。
+        </p>
+        <pre class="brush: python">
+row, col = 0, side - 1
+        </pre>
+        <p>
+            从顶部开始，接下来的几个字符将在接下来的行中处于较低的位置，所以行移动<b class="code">dr</b> 是<b class="code">1</b> 。列移动<b class="code">dc</b> 取决于放置字符的方向<b class="code">cw</b> 。如果按顺时针方向移动，列移动为<b class="code">1</b> ，否则为<b class="code">-1</b> 。考虑到逻辑值可以解释为整数，我为您提供下面的表达式来计算它。现在我们一起来看看。
+        </p>
+        <pre class="brush: python">
+row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+        </pre>
+        <p>
+            我们终于准备好填写栏位了。
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        是的，我准备好了。告诉我该怎么做！
+    </div>
+    <div class="answer">
+        <p>
+            使用<a target="_blank" href="https://www.w3schools.com/python/python_for_loops.asp">for</a> 循环遍历<b class="code">text</b> ，并使用索引更改<b class="code">field</b> 当前行列位置的值（空白）与当前<b class="code">char</b> 。
+        </p>
+        <pre class="brush: python">
+for char in text:
+    field[row][col] = char
+        </pre>
+        <p>
+            然后（在循环内部）用当前移位更新行-列位置-"移动 "到下一个位置。
+        </p>
+        <pre class="brush: python">
+row += dr
+col += dc
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        哇哦看起来很容易填充！但是当移动到字段末尾时，如何改变移动方向？
+    </div>
+    <div class="answer">
+        <p>
+            可以！让我们考虑一下这些情况。使用<a target="_blank" href="https://www.w3schools.com/python/gloss_python_elif.asp">if/elif</a> 表达式来处理它们。您的 "光标 "只与最后一行相遇一次--在菱形的底部（其中行等于菱形的总大小，考虑到0-base索引），行移动将其值改变为相反值--之后它 "移动 "到上面！
+        </p>
+        <pre class="brush: python">
+if row == tot_size - 1:
+    dr *= -1
+        </pre>
+        <p>
+            "光标 "在菱形的左侧和右侧与列的末端相遇两次（具体顺序取决于移动方向）。用上述相同的逻辑扩展表达式。
+        </p>
+        <pre class="brush: python">
+elif col in (0, tot_size - 1):
+    dc *= -1
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        好的，在用文本字符填充字段后我应该做什么？
+    </div>
+    <div class="answer">
+        <p>
+            几乎全部。使用列表理解、<a target="_blank" href="https://www.w3schools.com/python/ref_string_join.asp">str.join()</a> 方法和<a target="_blank" href="https://www.w3schools.com/python/ref_string_rstrip.asp">str.rstrip()</a> 方法，将<b class="code">field</b> 每一行中的字符连接起来，并去掉尾部的空白。 
+        </p>
+        <pre class="brush: python">
+["".join(row).rstrip() for row in field]
+        </pre>
+        <p>
+            现在使用该列表作为 join 方法的参数，并加上下一行分隔符，以创建您需要返回的多行文本。
+        </p>
+        <pre class="brush: python">
+str_res = "\n".join("".join(row).rstrip() for row in field)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        那么，我的最终解决方案应该是怎样的呢？
+    </div>
+    <div class="answer">
+        <p>
+            您只需将之前所有的提示连接起来，并将代码封装为函数表达式。强烈建议对输入和输出数据使用类型提示。
+        </p>
+        <p>这里是整个解决方案：</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def hollow_diamond(side: int, length: int, cw: bool) -> str:
+
+    LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+    text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+    tot_size = 2*side - 1
+    field = [[" "] * tot_size for _ in range(tot_size)]
+    row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+    for char in text:
+        field[row][col] = char
+        row += dr
+        col += dc
+        if row == tot_size - 1:
+            dr *= -1
+        elif col in (0, tot_size - 1):
+            dc *= -1
+    str_res = "\n".join("".join(row).rstrip() for row in field)
+
+    return str_res
+        </pre>
+        </div>
+        <p>点击任务菜单<b>Best Solutions</b> ，查看更多有趣的解决方案！</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        谢谢！我现在知道并理解了更多！一切正常！
+    </div>
+    <div class="answer">
+        很高兴听到这个消息👍！
+    </div>
+</div>
+</body>
