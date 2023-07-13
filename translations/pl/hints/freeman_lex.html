@@ -1,0 +1,175 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        Nie mam pojęcia, jak zacząć rozwiązywać tę misję.
+    </div>
+    <div class="answer">
+        <p>
+            Proszę złapać pomysł 💡! Aby utworzyć pole białych spacji o odpowiedniej wysokości i szerokości, a następnie iterować po tekście i zmieniać białe spacje w określonym wierszu-kolumnie pola z bieżącym znakiem tekstu. Proszę zacząć od góry diamentu i zmieniać wartości wierszy i kolumn, aby "przesunąć się" w danym kierunku. Na końcu proszę połączyć znaki w każdym wierszu razem, usunąć końcowe białe spacje i połączyć wszystkie wiersze razem w tekst wielowierszowy.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wygląda na wiele kroków, ale nie boję się! Od czego powinienem zacząć?
+    </div>
+    <div class="answer">
+        <p>
+            Świetnie! Najpierw musi Pan poczynić pewne przygotowania i zadeklarować kilka wartości. Zacznijmy od stałej angielskich liter. Proszę używać wielkich liter do deklarowania stałych.    
+        </p>
+        <pre class="brush: python">
+LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+        </pre>
+        <p>
+            Teraz proszę zbudować swoją <b class="code">text</b>, która składa się z <b class="code">length</b> części <b class="code">LOWERCASE</b>, przekonwertowanej na <a target="_blank" href="https://www.w3schools.com/python/ref_func_list.asp">list()</a>, uzupełnionej listą wielu <b class="code">*</b>, jeśli to konieczne. Patrząc na dowolny diament, mogą Państwo zobaczyć, że całkowita liczba elementów w nim wynosi <b class="code">4*(side-1)</b>. To wszystko, czego potrzebują Państwo do zbudowania <b class="code">text</b> - pełny ciąg znaków, który należy umieścić na polu. 
+        </p>
+        <pre class="brush: python">
+text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Co powinienem zrobić dalej?
+    </div>
+    <div class="answer">
+        <p>
+            Mogą Państwo również zauważyć, że diament ma szerokość równą <b class="code">2*side - 1</b> w najszerszym rzędzie. Jest to w rzeczywistości rozmiar Państwa pola.
+        </p>
+        <pre class="brush: python">
+tot_size = 2*side - 1
+        </pre>
+        <p>
+            Teraz zbudujmy samo pole jako <b class="code">tot_size</b> rzędów <b class="code">tot_size</b> białych spacji przy użyciu <a target="_blank" href="https://www.w3schools.com/python/python_lists_comprehension.asp">list comprehension</a>.
+        </p>
+        <pre class="brush: python">
+field = [[" "] * tot_size for _ in range(tot_size)]
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Jak znaleźć pozycję początkową i przejść do następnej pozycji?
+    </div>
+    <div class="answer">
+        <p>
+            Ostatnim etapem przygotowań jest zadeklarowanie początkowej pozycji wiersza i kolumny oraz początkowego przesunięcia wiersza i kolumny do następnej pozycji. Proszę się zastanowić, jakie to powinny być pozycje. Wierzchołek diamentu znajduje się w pierwszym rzędzie i w odległości <b class="code">size</b> od początku rzędu. Biorąc pod uwagę indeksowanie oparte na 0 w Pythonie, otrzymujemy konstrukcję wyrażeń z rozpakowywaniem krotek.
+        </p>
+        <pre class="brush: python">
+row, col = 0, side - 1
+        </pre>
+        <p>
+            Zaczynając od góry, kilka następnych znaków będzie niżej - w kolejnych wierszach, więc przesunięcie wiersza <b class="code">dr</b> to <b class="code">1</b>. Przesunięcie kolumnowe <b class="code">dc</b> zależy od kierunku umieszczania znaków <b class="code">cw</b>. Jeśli poruszamy się zgodnie z ruchem wskazówek zegara, przesunięcie kolumnowe wynosi <b class="code">1</b>, w przeciwnym razie <b class="code">-1</b>. Mając na uwadze, że wartości logiczne mogą być interpretowane jako liczby całkowite, proponuję Państwu następujące wyrażenie do ich obliczenia. Teraz wszystko razem.
+        </p>
+        <pre class="brush: python">
+row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+        </pre>
+        <p>
+            Jesteśmy wreszcie gotowi do wypełnienia pola.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Tak, jestem gotowy. Proszę mi pokazać, co mam robić!
+    </div>
+    <div class="answer">
+        <p>
+            Proszę wykonać iterację po <b class="code">text</b> za pomocą pętli <a target="_blank" href="https://www.w3schools.com/python/python_for_loops.asp">for</a> i zmienić wartość (biała spacja) w bieżącej pozycji wiersz-kolumna <b class="code">field</b> z bieżącą <b class="code">char</b> za pomocą indeksowania.
+        </p>
+        <pre class="brush: python">
+for char in text:
+    field[row][col] = char
+        </pre>
+        <p>
+            Następnie (wewnątrz pętli) zaktualizować pozycję wiersz-kolumna z bieżącymi przesunięciami - "przenieść" do następnej pozycji.
+        </p>
+        <pre class="brush: python">
+row += dr
+col += dc
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wow. Wygląda na łatwe wypełnianie! Ale jak zmienić kierunek przesuwania po osiągnięciu końca pola?
+    </div>
+    <div class="answer">
+        <p>
+            Tak! Proszę rozważyć te przypadki. Proszę użyć wyrażenia <a target="_blank" href="https://www.w3schools.com/python/gloss_python_elif.asp">if/elif</a>, aby sobie z nimi poradzić. Pana "kursor" napotka ostatni wiersz tylko raz - na dole diamentu (gdzie wiersz jest równy całkowitemu rozmiarowi diamentu z uwzględnieniem indeksowania o podstawie 0), a przesunięcie wiersza zmieni jego wartość na przeciwną - po czym "przesunie się" w górę!
+        </p>
+        <pre class="brush: python">
+if row == tot_size - 1:
+    dr *= -1
+        </pre>
+        <p>
+            "Kursor" spotyka się z końcem kolumn dwukrotnie - po lewej i prawej stronie diamentu (dokładna kolejność zależy od kierunku ruchu). Z taką samą logiką jak powyżej proszę rozszerzyć wyrażenie.
+        </p>
+        <pre class="brush: python">
+elif col in (0, tot_size - 1):
+    dc *= -1
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ok, co powinienem zrobić po wypełnieniu pola znakami z tekstu?
+    </div>
+    <div class="answer">
+        <p>
+            To prawie wszystko. Proszę połączyć znaki w każdym wierszu <b class="code">field</b> i usunąć końcowe białe spacje, używając rozumienia listy, metody <a target="_blank" href="https://www.w3schools.com/python/ref_string_join.asp">str.join()</a> i metody <a target="_blank" href="https://www.w3schools.com/python/ref_string_rstrip.asp">str.rstrip()</a>. 
+        </p>
+        <pre class="brush: python">
+["".join(row).rstrip() for row in field]
+        </pre>
+        <p>
+            Teraz proszę użyć tej listy jako argumentu metody join z separatorem następnego wiersza, aby utworzyć wielowierszowy tekst, który należy zwrócić.
+        </p>
+        <pre class="brush: python">
+str_res = "\n".join("".join(row).rstrip() for row in field)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Jak więc powinno wyglądać moje ostateczne rozwiązanie?
+    </div>
+    <div class="answer">
+        <p>
+            Wystarczy połączyć wszystkie poprzednie podpowiedzi i zawinąć kod w wyrażenie funkcyjne. Używanie podpowiedzi typu dla danych wejściowych i wyjściowych jest wysoce zalecane.
+        </p>
+        <p>Oto całe rozwiązanie:</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def hollow_diamond(side: int, length: int, cw: bool) -> str:
+
+    LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+    text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+    tot_size = 2*side - 1
+    field = [[" "] * tot_size for _ in range(tot_size)]
+    row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+    for char in text:
+        field[row][col] = char
+        row += dr
+        col += dc
+        if row == tot_size - 1:
+            dr *= -1
+        elif col in (0, tot_size - 1):
+            dc *= -1
+    str_res = "\n".join("".join(row).rstrip() for row in field)
+
+    return str_res
+        </pre>
+        </div>
+        <p>Proszę kliknąć <b>Best Solutions</b> w menu misji i zobaczyć wiele innych ciekawych rozwiązań!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Dzięki! Teraz wiem i rozumiem więcej! Wszystko działa jak należy!
+    </div>
+    <div class="answer">
+        Miło mi to słyszeć 👍!
+    </div>
+</div>
+</body>
