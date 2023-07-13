@@ -1,0 +1,55 @@
+<!-- Describe task in general -->
+
+<p>
+    Votre fonction doit renvoyer une chaîne multiligne de lettres minuscules uniques dans l'ordre alphabétique. Les caractères doivent être placés dans un losange creux, le long de ses bords, en commençant par le sommet.  
+</p>
+<p>
+    Pour ce faire, vous disposez de trois valeurs (pour leurs contraintes, voir Conditions préalables):
+    <ul>
+        <li><b>side</b> - le nombre de lettres dans chaque côté du losange;</li>
+        <li><b>length</b> - le nombre total de lettres que vous devez utiliser;</li>
+        <li><b>cw</b> - le drapeau "sens des aiguilles d'une montre", qui indique dans quel sens les lettres doivent être placées (si les lettres doivent être placées dans le sens des aiguilles d'une montre) <b>{% if is_js %}t{% else %}T{% endif %}rue</b> - les lettres doivent être placées dans le sens des aiguilles d'une montre).</li>
+    </ul>
+</p>
+<p>
+    Si <b>length</b> n'est pas suffisant pour compléter la forme, complétez-le avec <b>"*"</b>. Le losange ne doit pas comporter d'espaces blancs à droite. Voici un exemple avec les arguments et le résultat attendu:
+</p>
+
+<p style="text-align: center;">
+    <img  title="example" src="{{MEDIA}}diamond.png" alt="example" style="max-height: 200px"/>
+</p>
+
+<!-- Explain input and output values -->
+<p>
+   <strong>Entrée:</strong> Trois arguments: le côté en tant qu'entier ({% if is_js %}number{% else %}int{% endif %}), la longueur en tant qu'entier ({% if is_js %}number{% else %}int{% endif %}) et le sens des aiguilles d'une montre en tant que logique (bool{% if is_js %}ean{% endif %}).
+</p>
+
+<p>
+   <strong>Résultat:</strong> Chaîne de caractères multilignes <span>(str{% if is_js %}ing{% endif %})</span>. 
+</p>
+
+
+<p>
+    <strong>Exemples:</strong>
+</p>
+
+<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+
+<!-- Here you can explain how it can be used in development -->
+<!-- The section is optional -->
+<!-- <p class="for_info_only">
+
+    <strong>How it’s used:</strong>
+    <i>(math is used everywhere)</i>
+</p> -->
+
+<!-- Here you can explain some constraints for input-->
+<!-- The section is optional -->
+<p>
+    <strong>Conditions préalables:</strong>
+    <ul>
+    <li><i>26 &gt;= longueur &gt;= 0;</i></li>
+    <li><i>côté &gt; 1;</i></li>
+    <li><i>(côté-1)*4 &gt;= longueur.</i></li>
+    </ul>
+</p>
