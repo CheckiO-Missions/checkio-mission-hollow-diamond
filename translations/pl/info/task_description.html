@@ -1,0 +1,55 @@
+<!-- Describe task in general -->
+
+<p>
+    Funkcja powinna zwrócić wielowierszowy ciąg unikalnych małych liter w porządku alfabetycznym. Znaki powinny być umieszczone w formie wydrążonego rombu (diamentu), wzdłuż jego krawędzi, zaczynając od górnego wierzchołka.  
+</p>
+<p>
+    W tym celu proszę podać trzy wartości (ich ograniczenia znajdują się w sekcji Warunki wstępne):
+    <ul>
+        <li><b>side</b> - liczba liter w każdym boku rombu;</li>
+        <li><b>length</b> - całkowita liczba liter, których należy użyć;</li>
+        <li><b>cw</b> - flaga zgodna z ruchem wskazówek zegara, która pokazuje, w którym kierunku muszą iść litery (jeśli <b>{% if is_js %}t{% else %}T{% endif %}rue</b> - litery powinny być ułożone zgodnie z ruchem wskazówek zegara).</li>
+    </ul>
+</p>
+<p>
+    Jeśli nie wystarczy <b>length</b> do uzupełnienia formularza, proszę uzupełnić go o <b>"*"</b>. Romb nie powinien mieć białych spacji po prawej stronie. Poniżej znajduje się przykład z argumentami i oczekiwanym wynikiem:
+</p>
+
+<p style="text-align: center;">
+    <img  title="example" src="{{MEDIA}}diamond.png" alt="example" style="max-height: 200px"/>
+</p>
+
+<!-- Explain input and output values -->
+<p>
+   <strong>Wejście:</strong> Trzy argumenty: bok jako liczba całkowita ({% if is_js %}liczba{% else %}int{% endif %}), długość jako liczba całkowita ({% if is_js %}liczba{% else %}int{% endif %}) i flaga zgodna z ruchem wskazówek zegara jako logika (bool{% if is_js %}ean{% endif %}).
+</p>
+
+<p>
+   <strong>Wyjście:</strong> Wielowierszowy ciąg znaków <span>(str{% if is_js %}ing{% endif %})</span>. 
+</p>
+
+
+<p>
+    <strong>Przykłady:</strong>
+</p>
+
+<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+
+<!-- Here you can explain how it can be used in development -->
+<!-- The section is optional -->
+<!-- <p class="for_info_only">
+
+    <strong>How it’s used:</strong>
+    <i>(math is used everywhere)</i>
+</p> -->
+
+<!-- Here you can explain some constraints for input-->
+<!-- The section is optional -->
+<p>
+    <strong>Warunki wstępne:</strong>
+    <ul>
+    <li><i>26 &gt;= length &gt;= 0;</i></li>
+    <li><i>side &gt; 1;</i></li>
+    <li><i>(side-1)*4 &gt;= length.</i></li>
+    </ul>
+</p>
