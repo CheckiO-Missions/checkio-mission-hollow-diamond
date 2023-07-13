@@ -1,0 +1,55 @@
+<!-- Describe task in general -->
+
+<p>
+    您的函数应按字母顺序返回由唯一的小写字母组成的多行字符串。这些字符应从顶点开始，沿其边缘排列成空心菱形（菱形）。  
+</p>
+<p>
+    为此，您将得到三个值（其约束条件请参见 "先决条件"）：
+    <ul>
+        <li><b>side</b> - 菱形每边的字母数；</li>
+        <li><b>length</b> - 您应该使用的字母总数；</li>
+        <li><b>cw</b> - 顺时针方向标志，表示字母必须按什么方向排列（如果 <b>{% if is_js %}t{% else %}T{% endif %}rue</b> - 字母应按顺时针方向放置）。</li>
+    </ul>
+</p>
+<p>
+    如果<b>length</b> 不足以完成表格，请用<b>"*"</b> 补充。菱形右侧不应留白。下面是一个包含参数和预期结果的示例：
+</p>
+
+<p style="text-align: center;">
+    <img  title="example" src="{{MEDIA}}diamond.png" alt="example" style="max-height: 200px"/>
+</p>
+
+<!-- Explain input and output values -->
+<p>
+   <strong>输入：</strong>三个参数：边长为整数 ({% if is_js %}number{% else %}int{% endif %}), 长度为整数 ({% if is_js %}number{% else %}int{% endif %}), 顺时针方向标志为逻辑 (bool{% if is_js %}ean{% endif %}).
+</p>
+
+<p>
+   <strong>输出：</strong>多行字符串 <span>(str{% if is_js %}ing{% endif %})</span>. 
+</p>
+
+
+<p>
+    <strong>示例：</strong>
+</p>
+
+<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+
+<!-- Here you can explain how it can be used in development -->
+<!-- The section is optional -->
+<!-- <p class="for_info_only">
+
+    <strong>How it’s used:</strong>
+    <i>(math is used everywhere)</i>
+</p> -->
+
+<!-- Here you can explain some constraints for input-->
+<!-- The section is optional -->
+<p>
+    <strong>前提条件：</strong>
+    <ul>
+    <li><i>26 &gt;= length &gt;= 0；</i></li>
+    <li><i>side &gt; 1；</i></li>
+    <li><i>(side-1)*4 &gt;= length.</i></li>
+    </ul>
+</p>
