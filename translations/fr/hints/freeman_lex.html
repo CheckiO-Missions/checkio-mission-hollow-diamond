@@ -1,0 +1,175 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        Je n'ai aucune idée de la manière de commencer à résoudre cette mission.
+    </div>
+    <div class="answer">
+        <p>
+            Attrapez une idée 💡! Créer un champ d'espaces blancs de hauteur et de largeur appropriées, puis itérer sur le texte et changer l'espace blanc dans la ligne-colonne spécifique du champ avec le caractère actuel du texte. Commencez par le haut du losange et modifiez les valeurs des lignes et des colonnes pour vous "déplacer" dans la direction donnée. À la fin, réunissez les caractères de chaque ligne, supprimez les espaces blancs de fin et réunissez toutes les lignes en un texte multiligne.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Cela semble beaucoup d'étapes, mais je n'ai pas peur! Par quoi dois-je commencer?
+    </div>
+    <div class="answer">
+        <p>
+            Parfaitement! Tout d'abord, vous devez faire quelques préparatifs et déclarer quelques valeurs. Commençons par la constante en lettres anglaises. Utilisez des lettres majuscules pour déclarer une constante.    
+        </p>
+        <pre class="brush: python">
+LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+        </pre>
+        <p>
+            Vous devez maintenant construire votre <b class="code">text</b>, qui se compose de <b class="code">length</b>, une partie de <b class="code">LOWERCASE</b>, convertie en <a target="_blank" href="https://www.w3schools.com/python/ref_func_list.asp">list()</a>, complétée par une liste de plusieurs <b class="code">*</b> si nécessaire. En regardant n'importe quel diamant, vous pouvez voir que le nombre total d'éléments qu'il contient est <b class="code">4*(side-1)</b>. C'est tout ce dont vous avez besoin pour construire le <b class="code">text</b> - une séquence complète de caractères, que vous devez placer dans le champ. 
+        </p>
+        <pre class="brush: python">
+text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Que dois-je faire ensuite?
+    </div>
+    <div class="answer">
+        <p>
+            Vous pouvez également remarquer qu'un diamant a une largeur égale à <b class="code">2*side - 1</b> dans sa rangée la plus large. Il s'agit en fait de la taille de votre champ.
+        </p>
+        <pre class="brush: python">
+tot_size = 2*side - 1
+        </pre>
+        <p>
+            Construisons maintenant un champ en tant que <b class="code">tot_size</b> rangées de <b class="code">tot_size</b> espaces blancs en utilisant <a target="_blank" href="https://www.w3schools.com/python/python_lists_comprehension.asp">list comprehension</a>.
+        </p>
+        <pre class="brush: python">
+field = [[" "] * tot_size for _ in range(tot_size)]
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Comment trouver la position de départ et passer à la position suivante?
+    </div>
+    <div class="answer">
+        <p>
+            Dans les dernières préparations, vous devez déclarer la position de la ligne et de la colonne de départ, ainsi que le décalage de la ligne et de la colonne de départ vers la position suivante. Réfléchissons à ce qu'ils devraient être. Le sommet du diamant se trouve dans la première ligne et à la distance <b class="code">size</b> du début de la ligne. En tenant compte de l'indexation basée sur 0 en Python, vous obtenez la construction d'expressions avec le déballage de tuple.
+        </p>
+        <pre class="brush: python">
+row, col = 0, side - 1
+        </pre>
+        <p>
+            En commençant par le haut, les prochains caractères seront plus bas - sur les lignes suivantes, donc le décalage de ligne <b class="code">dr</b> est <b class="code">1</b>. Le décalage de colonne <b class="code">dc</b> dépend du sens dans lequel les caractères sont placés <b class="code">cw</b>. Si vous vous déplacez dans le sens des aiguilles d'une montre, le décalage de colonne est <b class="code">1</b>, sinon <b class="code">-1</b>. Sachant que les valeurs logiques peuvent être interprétées comme des nombres entiers, je vous propose l'expression suivante pour les calculer. Maintenant, tout est réuni.
+        </p>
+        <pre class="brush: python">
+row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+        </pre>
+        <p>
+            Nous sommes enfin prêts à remplir le champ.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Oui, je suis prêt. Montrez-moi ce qu'il faut faire!
+    </div>
+    <div class="answer">
+        <p>
+            Interrogez le site <b class="code">text</b> à l'aide de la boucle <a target="_blank" href="https://www.w3schools.com/python/python_for_loops.asp">for</a> et modifiez une valeur (espace blanc) dans la position ligne-colonne actuelle du site <b class="code">field</b> avec le site <b class="code">char</b> actuel en utilisant l'indexation.
+        </p>
+        <pre class="brush: python">
+for char in text:
+    field[row][col] = char
+        </pre>
+        <p>
+            Ensuite (à l'intérieur de la boucle), mettez à jour la position ligne-colonne avec les décalages actuels - "passez" à la position suivante.
+        </p>
+        <pre class="brush: python">
+row += dr
+col += dc
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Vous voyez, c'est très simple! Le remplissage semble facile! Mais comment changer la direction du déplacement lorsque vous atteignez la fin du champ?
+    </div>
+    <div class="answer">
+        <p>
+            Oui! Réfléchissons à ces cas. Utilisez l'expression <a target="_blank" href="https://www.w3schools.com/python/gloss_python_elif.asp">if/elif</a> pour les traiter. Votre "curseur" ne rencontre la dernière ligne qu'une seule fois - au bas du losange (où la ligne est égale à la taille totale du losange en tenant compte de l'indexation de la base 0) et le décalage de ligne change sa valeur à l'opposé - après quoi il se "déplace" vers le haut!
+        </p>
+        <pre class="brush: python">
+if row == tot_size - 1:
+    dr *= -1
+        </pre>
+        <p>
+            le "curseur" rencontre la fin des colonnes deux fois - à gauche et à droite du losange (l'ordre exact dépend de la direction du déplacement). Avec la même logique que ci-dessus, prolongez l'expression.
+        </p>
+        <pre class="brush: python">
+elif col in (0, tot_size - 1):
+    dc *= -1
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ok, que dois-je faire après avoir rempli le champ avec les caractères du texte?
+    </div>
+    <div class="answer">
+        <p>
+            C'est presque tout. Joignez les caractères de chaque ligne de <b class="code">field</b> et supprimez les espaces blancs à la fin, en utilisant la compréhension de liste, la méthode <a target="_blank" href="https://www.w3schools.com/python/ref_string_join.asp">str.join()</a> et la méthode <a target="_blank" href="https://www.w3schools.com/python/ref_string_rstrip.asp">str.rstrip()</a>. 
+        </p>
+        <pre class="brush: python">
+["".join(row).rstrip() for row in field]
+        </pre>
+        <p>
+            Utilisez maintenant cette liste comme argument de la méthode join avec le séparateur de ligne suivant pour créer un texte multiligne que vous devez renvoyer.
+        </p>
+        <pre class="brush: python">
+str_res = "\n".join("".join(row).rstrip() for row in field)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Alors, à quoi devrait ressembler ma solution finale?
+    </div>
+    <div class="answer">
+        <p>
+            Il vous suffit de combiner tous les indices précédents et d'envelopper votre code dans une expression de fonction. Il est fortement recommandé d'utiliser des indications de type pour les données d'entrée et de sortie.
+        </p>
+        <p>Voici la solution complète:</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def hollow_diamond(side: int, length: int, cw: bool) -> str:
+
+    LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+    text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+    tot_size = 2*side - 1
+    field = [[" "] * tot_size for _ in range(tot_size)]
+    row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+    for char in text:
+        field[row][col] = char
+        row += dr
+        col += dc
+        if row == tot_size - 1:
+            dr *= -1
+        elif col in (0, tot_size - 1):
+            dc *= -1
+    str_res = "\n".join("".join(row).rstrip() for row in field)
+
+    return str_res
+        </pre>
+        </div>
+        <p>Cliquez sur <b>Best Solutions</b> dans le menu mission et découvrez de nombreuses autres solutions intéressantes!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Merci beaucoup! Je sais et je comprends mieux maintenant! Tout fonctionne bien!
+    </div>
+    <div class="answer">
+        Heureux de l'apprendre 👍!
+    </div>
+</div>
+</body>
