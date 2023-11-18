@@ -1,0 +1,175 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        Ich habe keine Ahnung, wie ich mit der Lösung dieser Aufgabe beginnen soll.
+    </div>
+    <div class="answer">
+        <p>
+            Fangen Sie eine Idee 💡! Erstellen Sie ein Feld mit Leerzeichen in der richtigen Höhe und Breite, iterieren Sie dann über den Text und ändern Sie das Leerzeichen in der jeweiligen Zeile/Spalte des Feldes mit dem aktuellen Zeichen des Textes. Beginnen Sie oben in der Raute und ändern Sie die Zeilen- und Spaltenwerte, um sich in die angegebene Richtung zu "bewegen". Am Ende fügen Sie die Zeichen in jeder Zeile zusammen, entfernen die nachstehenden Leerzeichen und fügen alle Zeilen zu einem mehrzeiligen Text zusammen.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Das sieht nach einer Menge von Schritten aus, aber ich habe keine Angst! Womit sollte ich beginnen?
+    </div>
+    <div class="answer">
+        <p>
+            Sehr gut! Zunächst müssen Sie einige Vorbereitungen treffen und ein paar Werte deklarieren. Beginnen wir mit der Konstante mit englischen Buchstaben. Verwenden Sie Großbuchstaben, wenn Sie eine Konstante deklarieren.    
+        </p>
+        <pre class="brush: python">
+LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+        </pre>
+        <p>
+            Nun müssen Sie Ihre <b class="code">text</b> aufbauen, die aus <b class="code">length</b> besteht, einem Teil von <b class="code">LOWERCASE</b>, der in <a target="_blank" href="https://www.w3schools.com/python/ref_func_list.asp">list()</a> umgewandelt wird, und die gegebenenfalls durch eine Liste mit mehreren <b class="code">*</b> ergänzt wird. Wenn Sie sich eine beliebige Raute ansehen, werden Sie feststellen, dass die Gesamtzahl der Elemente in ihr <b class="code">4*(side-1)</b> ist. Das ist alles, was Sie brauchen, um die <b class="code">text</b> zu erstellen - eine vollständige Folge von Zeichen, die Sie auf dem Feld platzieren müssen. 
+        </p>
+        <pre class="brush: python">
+text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Was soll ich als nächstes tun?
+    </div>
+    <div class="answer">
+        <p>
+            Vielleicht fällt Ihnen auch auf, dass ein Diamant in seiner breitesten Reihe die Breite <b class="code">2*side - 1</b> hat. Dies ist tatsächlich die Größe Ihres Feldes.
+        </p>
+        <pre class="brush: python">
+tot_size = 2*side - 1
+        </pre>
+        <p>
+            Lassen Sie uns nun ein Feld selbst als <b class="code">tot_size</b> Zeilen mit <b class="code">tot_size</b> Leerzeichen unter Verwendung von <a target="_blank" href="https://www.w3schools.com/python/python_lists_comprehension.asp">list comprehension</a> erstellen.
+        </p>
+        <pre class="brush: python">
+field = [[" "] * tot_size for _ in range(tot_size)]
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wie findet man die Startposition und verschiebt zur nächsten Position?
+    </div>
+    <div class="answer">
+        <p>
+            Als Letztes in der Vorbereitung müssen Sie die Position der Startzeile und -spalte sowie die Verschiebung der Startzeile und -spalte zur nächsten Position angeben. Lassen Sie uns überlegen, was das alles sein soll. Die Spitze der Raute befindet sich in der ersten Zeile und in der Entfernung <b class="code">size</b> vom Zeilenanfang. Wenn Sie die 0-basierte Indizierung in Python berücksichtigen, erhalten Sie eine Ausdruckserstellung mit Tupel-Entpackung.
+        </p>
+        <pre class="brush: python">
+row, col = 0, side - 1
+        </pre>
+        <p>
+            Von oben beginnend sind die nächsten Zeichen niedriger - in den nächsten Zeilen, also ist die Zeilenverschiebung <b class="code">dr</b> <b class="code">1</b> . Die Spaltenverschiebung <b class="code">dc</b> hängt von der Richtung der Platzierung der Zeichen <b class="code">cw</b> ab. Wenn Sie sich im Uhrzeigersinn bewegen, ist die Spaltenverschiebung <b class="code">1</b>, ansonsten <b class="code">-1</b>. In Anbetracht der Tatsache, dass logische Werte als ganze Zahlen interpretiert werden können, biete ich Ihnen den folgenden Ausdruck zur Berechnung an. Nun alles zusammen.
+        </p>
+        <pre class="brush: python">
+row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+        </pre>
+        <p>
+            Wir sind endlich bereit, das Feld auszufüllen.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ja, ich bin bereit. Zeigen Sie mir, was ich tun soll!
+    </div>
+    <div class="answer">
+        <p>
+            Iterieren Sie über die <b class="code">text</b> mit Hilfe der <a target="_blank" href="https://www.w3schools.com/python/python_for_loops.asp">for</a> Schleife und ändern Sie einen Wert (Leerzeichen) in der aktuellen Zeilen-/Spaltenposition von <b class="code">field</b> mit der aktuellen <b class="code">char</b> mit Hilfe der Indizierung.
+        </p>
+        <pre class="brush: python">
+for char in text:
+    field[row][col] = char
+        </pre>
+        <p>
+            Aktualisieren Sie dann (innerhalb der Schleife) die Zeilen-/Spaltenposition mit den aktuellen Verschiebungen - "verschieben" Sie zur nächsten Position.
+        </p>
+        <pre class="brush: python">
+row += dr
+col += dc
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wow! Sieht nach einfachem Ausfüllen aus! Aber wie ändert man die Richtung der Verschiebung, wenn man das Ende des Feldes erreicht?
+    </div>
+    <div class="answer">
+        <p>
+            Ja! Lassen Sie uns über diese Fälle nachdenken. Verwenden Sie <a target="_blank" href="https://www.w3schools.com/python/gloss_python_elif.asp">if/elif</a> Ausdruck, um sie zu behandeln. Ihr "Cursor" trifft die letzte Zeile nur einmal - am unteren Ende der Raute (wobei Zeile gleich der Gesamtgröße der Raute ist, wenn man die 0-Basis-Indexierung berücksichtigt) und Zeilenverschiebung ändert seinen Wert in das Gegenteil - danach "bewegt" er sich nach oben!
+        </p>
+        <pre class="brush: python">
+if row == tot_size - 1:
+    dr *= -1
+        </pre>
+        <p>
+            der "Cursor" trifft zweimal auf das Ende der Spalten - an der linken und rechten Seite der Raute (die genaue Reihenfolge hängt von der Bewegungsrichtung ab). Erweitern Sie den Ausdruck mit der gleichen Logik wie oben.
+        </p>
+        <pre class="brush: python">
+elif col in (0, tot_size - 1):
+    dc *= -1
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ok, was soll ich tun, nachdem ich das Feld mit Zeichen aus dem Text gefüllt habe?
+    </div>
+    <div class="answer">
+        <p>
+            Das ist fast alles. Verbinden Sie die Zeichen in jeder Zeile von <b class="code">field</b> und entfernen Sie die Leerzeichen am Ende. Verwenden Sie dazu das Listenverständnis, die Methode <a target="_blank" href="https://www.w3schools.com/python/ref_string_join.asp">str.join()</a> und die Methode <a target="_blank" href="https://www.w3schools.com/python/ref_string_rstrip.asp">str.rstrip()</a>. 
+        </p>
+        <pre class="brush: python">
+["".join(row).rstrip() for row in field]
+        </pre>
+        <p>
+            Verwenden Sie nun diese Liste als Argument der join-Methode mit dem nächsten Zeilentrennzeichen, um einen mehrzeiligen Text zu erstellen, den Sie zurückgeben müssen.
+        </p>
+        <pre class="brush: python">
+str_res = "\n".join("".join(row).rstrip() for row in field)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wie sollte also meine endgültige Lösung aussehen?
+    </div>
+    <div class="answer">
+        <p>
+            Sie müssen nur alle vorherigen Hinweise zusammenführen und Ihren Code in einen Funktionsausdruck verpacken. Die Verwendung von Typ-Hinweisen für Eingabe- und Ausgabedaten wird dringend empfohlen.
+        </p>
+        <p>Hier ist die gesamte Lösung:</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def hollow_diamond(side: int, length: int, cw: bool) -> str:
+
+    LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+    text = list(LOWERCASE[:length]) + ["*"] * ((side-1)*4-length)
+    tot_size = 2*side - 1
+    field = [[" "] * tot_size for _ in range(tot_size)]
+    row, col, dr, dc = 0, side - 1, 1, (-1)**(1-cw)
+    for char in text:
+        field[row][col] = char
+        row += dr
+        col += dc
+        if row == tot_size - 1:
+            dr *= -1
+        elif col in (0, tot_size - 1):
+            dc *= -1
+    str_res = "\n".join("".join(row).rstrip() for row in field)
+
+    return str_res
+        </pre>
+        </div>
+        <p>Klicken Sie auf <b>Best Solutions</b> im Missionsmenü und sehen Sie sich viele andere interessante Lösungen an!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Vielen Dank! Ich weiß und verstehe jetzt mehr! Alles funktioniert einwandfrei!
+    </div>
+    <div class="answer">
+        Freut mich zu hören 👍!
+    </div>
+</div>
+</body>
