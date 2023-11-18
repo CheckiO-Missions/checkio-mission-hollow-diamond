@@ -1,0 +1,55 @@
+<!-- Describe task in general -->
+
+<p>
+    Ihre Funktion sollte eine mehrzeilige Zeichenkette mit eindeutigen Kleinbuchstaben in alphabetischer Reihenfolge zurückgeben. Die Buchstaben sollten in Form eines hohlen Rhombus (Raute) entlang der Kanten, beginnend mit dem oberen Scheitelpunkt, angeordnet werden.  
+</p>
+<p>
+    Zu diesem Zweck werden Ihnen drei Werte vorgegeben (für deren Einschränkungen siehe Vorbedingungen):
+    <ul>
+        <li><b>side</b> - anzahl der Buchstaben auf jeder Seite des Rhombus;</li>
+        <li><b>length</b> - gesamtzahl der Buchstaben, die Sie verwenden sollen;</li>
+        <li><b>cw</b> - uhrzeigersinn-Flagge, die angibt, in welche Richtung die Buchstaben gehen müssen (wenn <b>{% if is_js %}t{% else %}T{% endif %}rue</b> - buchstaben im Uhrzeigersinn platziert werden sollen).</li>
+    </ul>
+</p>
+<p>
+    Wenn <b>length</b> nicht ausreicht, um das Formular zu vervollständigen, ergänzen Sie es mit <b>"*"</b>. Die Raute sollte keine Leerzeichen auf der rechten Seite haben. Hier ist ein Beispiel mit Argumenten und erwartetem Ergebnis:
+</p>
+
+<p style="text-align: center;">
+    <img  title="example" src="{{MEDIA}}diamond.png" alt="example" style="max-height: 200px"/>
+</p>
+
+<!-- Explain input and output values -->
+<p>
+   <strong>Eingabe:</strong> Drei Argumente: Seite als Ganzzahl ({% if is_js %}number{% else %}int{% endif %}), Länge als Ganzzahl ({% if is_js %}number{% else %}int{% endif %}) und Flagge im Uhrzeigersinn als Logik (bool{% if is_js %}ean{% endif %}).
+</p>
+
+<p>
+   <strong>Ausgabe:</strong> Mehrzeilige Zeichenkette <span>(str{% if is_js %}ing{% endif %})</span>. 
+</p>
+
+
+<p>
+    <strong>Beispiele:</strong>
+</p>
+
+<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+
+<!-- Here you can explain how it can be used in development -->
+<!-- The section is optional -->
+<!-- <p class="for_info_only">
+
+    <strong>How it’s used:</strong>
+    <i>(math is used everywhere)</i>
+</p> -->
+
+<!-- Here you can explain some constraints for input-->
+<!-- The section is optional -->
+<p>
+    <strong>Vorbedingungen:</strong>
+    <ul>
+    <li><i>26 &gt;= Länge &gt;= 0;</i></li>
+    <li><i>seite &gt; 1;</i></li>
+    <li><i>(Seite-1)*4 &gt;= Länge.</i></li>
+    </ul>
+</p>
